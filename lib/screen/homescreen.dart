@@ -1,6 +1,6 @@
-import 'package:db_miner/provider/quotes_provider.dart';
+import 'package:db_miner/controller/quotes_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,87 +11,72 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    super.initState();
+    var controller = Get.put(QuotesController());
+    controller.getquotes();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Provider.of<QuotesProvider>(context).getquotes();
-    return Consumer<QuotesProvider>(
-      builder: (context, provider, child) => Scaffold(
+    return GetBuilder(
+      init: QuotesController(),
+      builder: (QuotesController controller) => Scaffold(
+        backgroundColor: Colors.grey,
         appBar: AppBar(
           centerTitle: true,
           title: const Text(
-            "Api",
+            "DB Miner",
             style: TextStyle(fontSize: 25),
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                controller.getquotes();
+              },
+              icon: const Icon(Icons.refresh),
+            ),
+          ],
         ),
         body: ListView.builder(
-          itemCount: provider.quoteslist.length,
-          itemBuilder: (context, index) =>
-            Container(
-              height: 700,
-              color: Colors.black54,
-              alignment: Alignment.center,
+          itemCount: controller.quoteslist.length,
+          itemBuilder: (context, index) {
+            return Container(
+              height: 755,
+              margin: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                color: Colors.black54,
+              ),
               child: Container(
-                margin: EdgeInsets.all(25),
+                margin: EdgeInsets.all(20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "${provider.quoteslist[index]['quote']}",
-                      style:  TextStyle(
-                        fontSize: 25,
+                      "${controller.quoteslist[index].quote}",
+                      style: TextStyle(
+                        fontSize: 19,
                         color: Colors.white,
                       ),
                     ),
-                     SizedBox(height: 22,),
+                    SizedBox(
+                      height: 45,
+                    ),
                     Text(
-                      "Category :- ${provider.quoteslist[index]['category']}",
-                      style:  TextStyle(
-                        fontSize: 20,
+                      "Author :- ${controller.quoteslist[index].author}",
+                      style: TextStyle(
+                        fontSize: 17,
                         color: Colors.white,
                       ),
                     ),
                   ],
                 ),
               ),
-            )
-        )
+            );
+          }
+        ),
       ),
     );
   }
 }
-
-
-
-// ListView.builder(
-//   itemCount: provider.quoteslist.length,
-//   itemBuilder: (context, index) => ListTile(
-//
-//     title: Text(
-//       "${provider.quoteslist[index]['quote']}",
-//       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-//     ),
-//   ),
-// )
-
-// Container(
-// margin: EdgeInsets.all(25),
-// child: Column(
-// mainAxisAlignment: MainAxisAlignment.center,
-// children: [
-// Text(
-// "${provider.quoteslist[index]['quote']}",
-// style: TextStyle(
-// fontSize: 25,
-// color: Colors.white,
-// ),
-// ),
-// SizedBox(height: 22,),
-// Text(
-// "Category :- ${provider.quoteslist[index]['category']}",
-// style: TextStyle(
-// fontSize: 20,
-// color: Colors.white,
-// ),
-// ),
-// ],
-// ),
-// ),
