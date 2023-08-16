@@ -30,10 +30,10 @@ class Quotes {
     "author": author,
     "category": category,
   };
-
   Map<String, dynamic> toMap() => {
     "quote": quote,
     "author": author,
     "category": category,
+
   };
 }

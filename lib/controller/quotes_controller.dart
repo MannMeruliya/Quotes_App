@@ -6,7 +6,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class QuotesController extends GetxController {
-  List<Quotes> quoteslist = [];
+  List quoteslist = [];
 
   Future<void> getquotes() async {
     String baseUrl = "https://api.api-ninjas.com/v1/quotes";
@@ -18,15 +18,11 @@ class QuotesController extends GetxController {
     });
     print("Status code :: ${response.statusCode}");
     if (response.statusCode == 200) {
-      final List<dynamic> responseData = json.decode(response.body);
-      quoteslist = responseData
-          .map((quote) =>
-          Quotes(
-              quote: quote['quote'],
-              author: quote['author'],
-              category: quote['category']))
-          .toList();
-      _saveQuotes(quoteslist);
+      quoteslist.addAll(json.decode(response.body));
+      print(quoteslist);
+      // print(ModelList.first['Model']);
+      print(quoteslist[0]['gdp']);
+      // _saveQuotes(quoteslist)
       print(quoteslist);
     }
     update();
@@ -43,8 +39,8 @@ class QuotesController extends GetxController {
 
     for (var quote in quoteslist) {
       await database.insert(
-        'quotes',
-        quote.toMap(),
+        'quoteslist',
+        quote.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     }
@@ -56,3 +52,12 @@ class QuotesController extends GetxController {
     super.update(ids, condition);
   }
 }
+
+// final List<dynamic> responseData = json.decode(response.body);
+// quoteslist = responseData
+//     .map((quote) =>
+// Quotes(
+// quote: quote['quote'],
+// author: quote['author'],
+// category: quote['category']))
+// .toList();
