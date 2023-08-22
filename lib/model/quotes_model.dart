@@ -6,7 +6,7 @@ import 'dart:convert';
 
 List<Quotes> quotesFromJson(String str) => List<Quotes>.from(json.decode(str).map((x) => Quotes.fromJson(x)));
 
-String quotesToJson(List<Quotes> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String quotesToJson(List<Quotes> data) => json.encode(List<dynamic>.from(data.map((x) => x.toMap())));
 
 class Quotes {
   String? quote;

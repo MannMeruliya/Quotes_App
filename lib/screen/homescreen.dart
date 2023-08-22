@@ -42,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: controller.quoteslist.length,
           itemBuilder: (context, index) {
             return Container(
+              height: 735,
               margin: EdgeInsets.all(15),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -53,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "${controller.quoteslist[index]['quote']}",
+                      "${controller.quoteslist[index].quote}",
                       style: TextStyle(
                         fontSize: 19,
                         color: Colors.white,
@@ -63,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 45,
                     ),
                     Text(
-                      "${controller.quoteslist[index]['author']}",
+                      "${controller.quoteslist[index].author}",
                       style: TextStyle(
                         fontSize: 17,
                         color: Colors.white,

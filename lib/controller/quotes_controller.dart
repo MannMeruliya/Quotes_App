@@ -6,7 +6,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class QuotesController extends GetxController {
-  List quoteslist = [];
+  List<Quotes> quoteslist = [];
 
   Future<void> getquotes() async {
     String baseUrl = "https://api.api-ninjas.com/v1/quotes";
@@ -18,12 +18,17 @@ class QuotesController extends GetxController {
     });
     print("Status code :: ${response.statusCode}");
     if (response.statusCode == 200) {
-      quoteslist.addAll(json.decode(response.body));
+
+      final List<dynamic> responseData = json.decode(response.body);
+      quoteslist = responseData
+          .map((quote) =>
+          Quotes(
+              quote: quote['quote'],
+              author: quote['author'],
+              category: quote['category']))
+          .toList();
       print(quoteslist);
-      // print(ModelList.first['Model']);
-      print(quoteslist[0]['gdp']);
-      // _saveQuotes(quoteslist)
-      print(quoteslist);
+      _saveQuotes(quoteslist);
     }
     update();
   }
@@ -52,7 +57,7 @@ class QuotesController extends GetxController {
     super.update(ids, condition);
   }
 }
-
+//
 // final List<dynamic> responseData = json.decode(response.body);
 // quoteslist = responseData
 //     .map((quote) =>
