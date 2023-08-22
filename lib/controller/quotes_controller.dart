@@ -18,7 +18,6 @@ class QuotesController extends GetxController {
     });
     print("Status code :: ${response.statusCode}");
     if (response.statusCode == 200) {
-
       final List<dynamic> responseData = json.decode(response.body);
       quoteslist = responseData
           .map((quote) =>
@@ -27,8 +26,8 @@ class QuotesController extends GetxController {
               author: quote['author'],
               category: quote['category']))
           .toList();
-      print(quoteslist);
       _saveQuotes(quoteslist);
+      print(quoteslist);
     }
     update();
   }
@@ -57,12 +56,10 @@ class QuotesController extends GetxController {
     super.update(ids, condition);
   }
 }
-//
-// final List<dynamic> responseData = json.decode(response.body);
-// quoteslist = responseData
-//     .map((quote) =>
-// Quotes(
-// quote: quote['quote'],
-// author: quote['author'],
-// category: quote['category']))
-// .toList();
+
+
+// quoteslist.addAll(json.decode(response.body));
+// print(quoteslist.first.quote);
+// print(quoteslist[0].quote);
+// _saveQuotes(quoteslist);
+// print(quoteslist);

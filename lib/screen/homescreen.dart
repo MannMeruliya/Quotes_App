@@ -61,12 +61,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 45,
+                      height: 100,
                     ),
                     Text(
-                      "${controller.quoteslist[index].author}",
+                      "Author :- ${controller.quoteslist[index].author}",
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 3,
+                    ),
+                    Text(
+                      "Category :- ${controller.quoteslist[index].category}",
+                      style: TextStyle(
+                        fontSize: 18,
                         color: Colors.white,
                       ),
                     ),
